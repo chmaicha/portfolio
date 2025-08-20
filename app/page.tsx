@@ -1,102 +1,17 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import AssistantWidget from "@/components/AssistantWidget";
+import ProjectCard from "@/components/ProjectCard";
+import Section from "@/components/Section";
+import { profile, skills, projects, experiences, certifications, education } from "@/lib/content";
+import CompaniesMarquee from "@/components/CompaniesMarquee";
+import Education from "@/components/education";
+import { partners } from "@/lib/content";
+import CertificationCard from "@/components/CertificationCard";
+
 export default function Home() {
-  const profile = {
-    name: "Chaimae Aboulouafa",
-    title: "AI Engineer · LLM Infrastructure · Generative AI",
-    tagline:
-      "I build LLM agents, RAG systems, and reliable CI/CD for AI at scale.",
-    location: "Île-de-France, Europe",
-    email: "abl.chaimaie.2000@gmail.com",
-    phone: "06 52 41 93 66",
-    github: "https://github.com/chmaicha",
-    linkedin: "https://www.linkedin.com/in/chaimae-aboulouafa-3bb",
-    cvUrl: "/cv.pdf", // put your PDF in /public/cv.pdf
-  } as const;
-
-  const skills = [
-    "Python",
-    "LLMs (Mistral, fine‑tuning)",
-    "RAG / Ragas",
-    "LangChain",
-    "Docker",
-    "Linux",
-    "Pytest & testing",
-    "GCP (Vertex AI, BigQuery, Cloud Run, Cloud Functions, Storage, Pub/Sub)",
-    "AWS (S3, Lambda, EC2)",
-    "CI/CD (GitHub Actions, Jenkins)",
-    "NLP (BERT, TF‑IDF, clustering)",
-    "PostgreSQL",
-    "Regex",
-  ];
-
-  const experience = [
-    {
-      role: "Machine Learning Engineer",
-      company: "Fingreen AI",
-      location: "Paris, France",
-      dates: "Oct 2024 — Jul 2025",
-      bullets: [
-        "Built a RAG evaluation pipeline with Ragas for agent scoring & benchmarking.",
-        "Deployed Mistral models on Vertex AI with Docker & GitHub Actions.",
-        "Developed multi‑agent systems for data extraction & automated analysis.",
-        "Fine‑tuned Mistral for ESG domain; deployed via Ollama.",
-        "Automated workflows and CI/CD for reproducible agent testing.",
-      ],
-    },
-    {
-      role: "Data Scientist",
-      company: "VALEO CDA",
-      location: "Créteil, France",
-      dates: "Feb 2024 — Aug 2024",
-      bullets: [
-        "Improved CI/CD test quality via automated log analysis & ML error classification.",
-        "Pipelined Jenkins CI logs from AWS to GCP; dashboards in Looker Studio.",
-        "Advanced regex & NLP for error detection; unit tests & workflows.",
-      ],
-    },
-    {
-      role: "Backend Developer",
-      company: "Ringob",
-      location: "Tangier, Morocco",
-      dates: "Jul 2022 — Oct 2023",
-      bullets: [
-        "Built social gaming platform: profiles, posts, tournament join/track.",
-        "Stack: Node.js, GraphQL, MongoDB.",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      title: "LLM Agent RAG Evaluator",
-      desc: "Evaluation pipeline for RAG systems using Ragas + Pytest for regression testing.",
-      tech: ["Python", "LangChain", "Ragas", "Pytest"],
-      link: "#",
-    },
-    {
-      title: "Multi‑Agent Data Extractor",
-      desc: "Agents orchestrated for document extraction & analytics on GCP.",
-      tech: ["Mistral", "LangChain", "Docker", "GCP"],
-      link: "#",
-    },
-    {
-      title: "CI Log Intelligence",
-      desc: "ML‑powered CI log triage & error classification (BERT + Regex).",
-      tech: ["BERT", "Regex", "GCP", "AWS"],
-      link: "#",
-    },
-  ];
-
-  const partners = [
-    { name: "VALEO", src: "/logos/valeo.png" },
-    { name: "Fingreen AI", src: "/logos/fingreenai.png" },
-    { name: "Capgemini", src: "/logos/capgemini.png" },
-    { name: "Wafa Assurance", src: "/logos/wafaassurance.png" },
-  ];
-
-  
-
   return (
     <main className="min-h-screen text-zinc-100">
       {/* NAVBAR */}
@@ -104,28 +19,17 @@ export default function Home() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#home" className="font-semibold tracking-tight text-zinc-100">{profile.name}</a>
           <div className="hidden gap-6 text-sm md:flex">
-            <a href="#about" className="text-zinc-300 hover:text-white transition">About</a>
-            <a href="#skills" className="text-zinc-300 hover:text-white transition">Skills</a>
-            <a href="#projects" className="text-zinc-300 hover:text-white transition">Projects</a>
-            <a href="#experience" className="text-zinc-300 hover:text-white transition">Experience</a>
-            <a href="#companies" className="text-zinc-300 hover:text-white transition">Companies</a>
-            <a href="#contact" className="text-zinc-300 hover:text-white transition">Contact</a>
+            {["about","skills","projects","experience","certifications","education","contact"].map((s) => (
+              <a key={s} href={`#${s}`} className="text-zinc-300 hover:text-white transition">
+                {s[0].toUpperCase()+s.slice(1)}
+              </a>
+            ))}
           </div>
           <div className="flex items-center gap-2">
-            <a
-              className="inline-flex items-center rounded-xl border border-violet-700/40 bg-violet-700/10 px-3 py-1.5 text-sm text-violet-200 hover:bg-violet-700/20 transition"
-              href={profile.cvUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Download CV
-            </a>
-            <a
-              className="hidden md:inline-flex items-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-1.5 text-sm text-white shadow hover:opacity-90 transition"
-              href="#contact"
-            >
-              Hire Me
-            </a>
+            <a className="inline-flex items-center rounded-xl border border-violet-700/40 bg-violet-700/10 px-3 py-1.5 text-sm text-violet-200 hover:bg-violet-700/20 transition"
+               href={profile.cvUrl} target="_blank" rel="noreferrer">Download CV</a>
+            <a className="hidden md:inline-flex items-center rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-1.5 text-sm text-white shadow hover:opacity-90 transition"
+               href="#contact">Hire Me</a>
           </div>
         </nav>
       </header>
@@ -139,150 +43,87 @@ export default function Home() {
                 {profile.title}
               </span>
             </h1>
-            <p className="mt-4 max-w-prose text-lg text-zinc-300">
-              {profile.tagline}
-            </p>
+            <p className="mt-4 max-w-prose text-lg text-zinc-300">{profile.tagline}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href={profile.linkedin}
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition"
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={profile.github}
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </a>
-              <a
-                href={`mailto:${profile.email}`}
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition"
-              >
-                Email
-              </a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer"
+                 className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition">LinkedIn</a>
+              <a href={profile.github} target="_blank" rel="noreferrer"
+                 className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition">GitHub</a>
+              <a href={`mailto:${profile.email}`}
+                 className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-sm text-violet-200 hover:bg-violet-700/20 transition">Email</a>
             </div>
-            <p className="mt-4 text-sm text-zinc-400">
-              {profile.location} · {profile.phone}
-            </p>
+            <p className="mt-4 text-sm text-zinc-400">{profile.location} · {profile.phone}</p>
           </div>
-          <div className="md:col-span-2 flex items-center justify-center">
-            {/* Optional avatar: place /public/avatar.jpg */}
-            <div className="h-40 w-40 overflow-hidden rounded-2xl border border-violet-700/40 bg-gradient-to-br from-violet-900/40 to-fuchsia-900/20 md:h-56 md:w-56">
-  <img
-    src="/avatar.jpg"
-    alt="Chaimae Aboulouafa"
-    className="h-full w-full object-cover"
-  />
-</div>
 
+          <div className="md:col-span-2 flex items-center justify-center">
+            <div className="h-40 w-40 overflow-hidden rounded-2xl border border-violet-700/40 bg-gradient-to-br from-violet-900/40 to-fuchsia-900/20 md:h-56 md:w-56">
+              <Image src="/avatar.jpg" alt="Chaimae Aboulouafa" width={224} height={224} className="h-full w-full object-cover" />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-semibold tracking-tight">About</h2>
-        <p className="mt-3 max-w-3xl text-zinc-300">
+      <Section id="about" title="About">
+        <p className="max-w-3xl text-zinc-300">
           I’m an AI engineer experienced in building infrastructure, tools, and environments
-          for LLM‑based agents. I deploy and fine‑tune Mistral models on GCP, design
-          RAG pipelines and multi‑agent systems, and ship robust CI/CD workflows so research
-          prototypes become reliable products.
+          for LLM‑based agents. I deploy and fine‑tune Mistral on GCP, design RAG pipelines and multi‑agent systems,
+          and ship robust CI/CD so research prototypes become reliable products.
         </p>
-      </section>
 
-      {/* SKILLS */}
-      <section id="skills" className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-semibold tracking-tight">Skills & Tools</h2>
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {skills.map((s) => (
-            <li key={s} className="rounded-full border border-violet-700/40 bg-violet-800/20 px-3 py-1 text-sm text-violet-100">
-              {s}
-            </li>
-          ))}
-        </ul>
-      </section>
+        <div className="mt-4 inline-flex items-center gap-2 text-sm text-emerald-300">
+  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
+  Available for Work / Freelance
+</div>
+
+      </Section>
+
+
 
       {/* COMPANIES */}
       <section id="companies" className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-semibold tracking-tight">Companies I Worked With</h2>
-        <p className="mt-2 text-sm text-zinc-400">Valeo · Fingreen AI · Capgemini · Wafa Assurance</p>
-
-        {/* marquee container */}
-        <div className="relative mt-6 overflow-hidden rounded-2xl border border-violet-800/40 bg-black/30">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0b0214] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0b0214] to-transparent" />
-
-          {/* track */}
-          <div className="flex w-[200%] animate-marquee hover:[animation-play-state:paused] will-change-transform">
-
-            {[...Array(2)].map((_, idx) => (
-              <div key={idx} className="flex w-1/2 items-center justify-around gap-8 py-6">
-                {partners.map((p) => (
-                  <div
-  key={p.name}
-  className="flex h-20 w-44 items-center justify-center rounded-xl border border-violet-800/40 bg-white p-3 shadow-sm"
->
-  <img src={p.src} alt={p.name} className="max-h-12 max-w-full object-contain" />
-</div>
+  <h2 className="text-xl font-semibold tracking-tight">Companies I Worked With</h2>
+  <div className="mt-6 max-w-3xl">
+    <CompaniesMarquee items={partners} height={84} gap={28} speed={26} />
+  </div>
+</section>
 
 
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* marquee keyframes */}
-        <style jsx>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className="mx-auto max-w-6xl px-4 py-12">
-        <div className="flex items-end justify-between">
-          <h2 className="text-xl font-semibold tracking-tight">Projects</h2>
-          <a href={profile.github} className="text-sm text-violet-300 hover:underline" target="_blank" rel="noreferrer">
-            See more on GitHub →
-          </a>
-        </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p) => (
-            <a
-              key={p.title}
-              href={p.link}
-              className="group rounded-2xl border border-violet-800/40 bg-black/30 p-4 transition hover:shadow-[0_0_0_1px_rgba(167,139,250,0.4)] hover:translate-y-[-2px]"
-              target={p.link.startsWith("http") ? "_blank" : undefined}
-              rel={p.link.startsWith("http") ? "noreferrer" : undefined}
-            >
-              <div className="h-32 rounded-xl bg-gradient-to-br from-violet-900/30 to-fuchsia-900/30" />
-              <h3 className="mt-4 font-semibold tracking-tight text-zinc-100">{p.title}</h3>
-              <p className="mt-2 text-sm text-zinc-300">{p.desc}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {p.tech.map((t) => (
-                  <span key={t} className="rounded-full bg-violet-900/40 px-2 py-0.5 text-xs text-violet-100">
-                    {t}
+      {/* SKILLS */}
+      <Section id="skills" title="Skills & Tools">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Object.entries(skills).map(([cat, list]) => (
+            <div key={cat} className="rounded-2xl border border-violet-800/40 bg-black/30 p-5">
+              <p className="mb-2 text-lg font-semibold">{cat}</p>
+              <div className="flex flex-wrap gap-2">
+                {list.map((s) => (
+                  <span key={s} className="rounded-full border border-violet-700/40 bg-violet-800/20 px-3 py-1 text-sm text-violet-100">
+                    {s}
                   </span>
                 ))}
               </div>
-            </a>
+            </div>
           ))}
         </div>
-      </section>
+      </Section>
+
+      {/* PROJECTS */}
+      <Section id="projects" title="Projects & Architectures">
+        <div className="mb-4 flex items-center justify-between">
+          <p className="text-sm text-zinc-400">Selected work.</p>
+          <Link href={profile.github} className="text-sm text-violet-300 hover:underline" target="_blank">
+            More on GitHub →
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => <ProjectCard key={p.slug} p={p} />)}
+        </div>
+      </Section>
 
       {/* EXPERIENCE */}
-      <section id="experience" className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-semibold tracking-tight">Experience</h2>
-        <ol className="mt-6 space-y-6">
-          {experience.map((job) => (
+      <Section id="experience" title="Experience">
+        <ol className="space-y-6">
+          {experiences.map((job) => (
             <li key={job.company} className="rounded-2xl border border-violet-800/40 bg-black/30 p-5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <div>
@@ -294,105 +135,75 @@ export default function Home() {
                 <div className="text-sm text-zinc-400">{job.dates}</div>
               </div>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-300">
-                {job.bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
+                {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
               </ul>
             </li>
           ))}
         </ol>
-      </section>
+      </Section>
+
+      {/* CERTIFICATIONS */}
+
+        <section id="certifications" className="mx-auto max-w-6xl px-4 py-12">
+    <h2 className="text-xl font-semibold tracking-tight">Certifications</h2>
+
+    {/* 2 cartes par ligne dès sm+ ; 1 carte sur mobile */}
+    <div className="mt-6 grid gap-6 sm:grid-cols-2">
+  {certifications.map((c) => (
+    <CertificationCard key={c.id} c={c} />
+  ))}
+</div>
+
+  </section>
+
+
+
+      {/* EDUCATION */}
+
+         
+    
+        <div className="space-y-4">
+        <Education />
+        </div>
+   
 
       {/* CONTACT */}
-      <section id="contact" className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-semibold tracking-tight">Contact</h2>
-        <div className="mt-4 grid gap-6 md:grid-cols-2">
+      <Section id="contact" title="Contact">
+        <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-violet-800/40 bg-black/30 p-5">
-            <p className="text-zinc-300">
-              Want to collaborate or hire me? Reach out by email or LinkedIn, or
-              download my CV for details.
-            </p>
+            <p className="text-zinc-300">Want to collaborate or hire me? Reach out by email or LinkedIn, or download my CV.</p>
             <div className="mt-4 flex flex-wrap gap-3 text-sm">
-              <a
-                href={`mailto:${profile.email}`}
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition"
-              >
-                Email: {profile.email}
-              </a>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition"
-              >
-                GitHub
-              </a>
-              <a
-                href={profile.cvUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-white hover:opacity-90 transition"
-              >
-                Download CV
-              </a>
+              <a href={`mailto:${profile.email}`} className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition">Email: {profile.email}</a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition">LinkedIn</a>
+              <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-4 py-2 text-violet-100 hover:bg-violet-700/20 transition">GitHub</a>
+              <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-white hover:opacity-90 transition">Download CV</a>
             </div>
           </div>
           <div className="rounded-2xl border border-violet-800/40 bg-black/30 p-5">
             <form className="grid gap-3" action={`mailto:${profile.email}`} method="post" encType="text/plain">
-              <input
-                name="name"
-                placeholder="Your name"
-                className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40"
-                required
-              />
-              <input
-                name="email"
-                type="email"
-                placeholder="Your email"
-                className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40"
-                required
-              />
-              <textarea
-                name="message"
-                placeholder="Message"
-                rows={4}
-                className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40"
-                required
-              />
-              <button
-                type="submit"
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-sm text-white shadow hover:opacity-90 transition"
-              >
-                Send Message
-              </button>
-              <p className="text-xs text-zinc-400">
-                Tip: For a real backend, replace this mailto form with a service like
-                Formspree/Web3Forms later.
-              </p>
+              <input name="name" placeholder="Your name" className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40" required />
+              <input name="email" type="email" placeholder="Your email" className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40" required />
+              <textarea name="message" placeholder="Message" rows={4} className="rounded-xl border border-violet-800/40 bg-black/40 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-violet-700/40" required />
+              <button type="submit" className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-sm text-white shadow hover:opacity-90 transition">Send Message</button>
+              <p className="text-xs text-zinc-400">Tip: pour un vrai backend, branche Formspree/Web3Forms.</p>
             </form>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* FOOTER */}
       <footer className="border-t border-violet-800/40 py-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 text-sm text-zinc-400">
           <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#about" className="hover:underline">About</a>
             <a href="#projects" className="hover:underline">Projects</a>
+            <a href="#certifications" className="hover:underline">Certifications</a>
             <a href="#contact" className="hover:underline">Contact</a>
           </div>
         </div>
       </footer>
+
+      <AssistantWidget />
     </main>
   );
 }
