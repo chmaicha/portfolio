@@ -55,11 +55,11 @@ export default function Home() {
             <p className="mt-4 text-sm text-zinc-400">{profile.location} · {profile.phone}</p>
           </div>
 
-          <div className="md:col-span-2 flex items-center justify-center">
+          {/* <div className="md:col-span-2 flex items-center justify-center">
             <div className="h-40 w-40 overflow-hidden rounded-2xl border border-violet-700/40 bg-gradient-to-br from-violet-900/40 to-fuchsia-900/20 md:h-56 md:w-56">
               <Image src="/avatar.jpg" alt="Chaimae Aboulouafa" width={224} height={224} className="h-full w-full object-cover" />
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

@@ -49,8 +49,8 @@ export const profile = {
       ],
       heroImage: "/projects/ragas.png",
       gallery: [
-        "/projects/rag-evaluator/bench.png",
-        "/projects/rag-evaluator/report.png",
+        "/projects/ragas.png",
+        "/projects/ragas.png",
       ],
       links: [
         { label: "Repository", href: "#" },
@@ -70,7 +70,7 @@ export const profile = {
         { label: "Docs / h", value: "400+" },
         { label: "Latence", value: "-35%" },
       ],
-      heroImage: "/projects/multi-agent/cover.png",
+      heroImage: "/projects/ragas.png",
       links: [{ label: "Repository", href: "#" }],
     },
     {
@@ -83,7 +83,7 @@ export const profile = {
       ],
       tech: ["BERT", "Regex", "GCP", "AWS"],
       metrics: [{ label: "Temps d’investigation", value: "-40%" }],
-      heroImage: "/projects/ci-log/cover.png",
+      heroImage: "/projects/ragas.png",
     },
   ];
   
