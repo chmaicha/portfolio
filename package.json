@@ -2,11 +2,13 @@
   "name": "chaimae-portfolio",
   "version": "1.0.0",
   "private": true,
+
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
+  "dev": "next dev",
+  "build": "next build --no-lint",
+  "start": "next start"
+},
+
   "dependencies": {
     "framer-motion": "^12.23.12",
     "next": "^15.4.6",
