@@ -3,12 +3,21 @@ import Link from "next/link";
 import { projects } from "@/lib/content";
 
 export function generateStaticParams() {
+  // ✅ inchangé
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const p = projects.find((x) => x.slug === params.slug);
-  if (!p) return <div className="mx-auto max-w-3xl p-8">Project not found.</div>;
+// ✅ params est une Promise et on l'attend
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const p = projects.find((x) => x.slug === slug);
+  if (!p) {
+    return <div className="mx-auto max-w-3xl p-8">Project not found.</div>;
+  }
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 text-zinc-100">
@@ -57,8 +66,13 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       {p.links && p.links.length > 0 && (
         <div className="mt-6 flex flex-wrap gap-2">
           {p.links.map((l) => (
-            <a key={l.href} href={l.href} target="_blank" rel="noreferrer"
-               className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-3 py-1.5 text-sm text-violet-200 hover:bg-violet-700/20 transition">
+            <a
+              key={l.href}
+              href={l.href}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-xl border border-violet-700/40 bg-violet-700/10 px-3 py-1.5 text-sm text-violet-200 hover:bg-violet-700/20 transition"
+            >
               {l.label}
             </a>
           ))}
